@@ -24,7 +24,10 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 .thumb-caption{ position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted); padding:6px 8px; border-radius:8px; font-size:12px; z-index:6;}
 .thumb-card:hover{ transform:translateY(-6px) scale(1.01); }
 .copy-row{ display:flex; gap:12px; justify-content:center; margin-top:16px; flex-wrap:wrap;}
-.copy-btn{ background:#1e7f63; color:white; padding:12px 18px; border-radius:10px; border:0; font-weight:800; cursor:pointer; min-width:180px;}
+.copy-btn{ background:#1e7f63; color:white; padding:12px 18px; border-radius:10px; border:0; font-weight:800; cursor:pointer; min-width:200px;}
+.copy-btn.small{ min-width:150px;}
+/* single-line two copy buttons */
+.copy-row.inline{ justify-content:center; gap:12px; flex-wrap:nowrap; }
 #pinModal{ display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
 .pin-box{ width:92%; max-width:420px; background:#071428; padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); text-align:center;}
 .pin-box h3{ margin:0 0 12px; color:var(--accent); font-size:18px;}
@@ -39,7 +42,7 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 .info-left{ flex:1; min-width:200px;}
 .info-actions{ display:flex; gap:10px; align-items:center; margin-top:12px;}
 .small-muted{ color:var(--muted); font-size:13px;}
-@media (max-width:520px){ .thumb-card{ width:100%; height:150px;} .item{ width:65px; height:65px;} .copy-btn{ min-width:140px;} }
+@media (max-width:520px){ .thumb-card{ width:100%; height:150px;} .item{ width:65px; height:65px;} .copy-btn{ min-width:140px;} .copy-row.inline{flex-wrap:wrap;} }
 </style>
 </head>
 <body>
@@ -51,9 +54,11 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
   <div class="label">JEETWIN</div>
   <div class="row">
     <div class="item"><img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo"></div>
+    <!-- Login requires PIN -->
     <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://jee2win.com/page/affiliate/login.jsp')">Login</a></div>
+    <!-- Thumb requires PIN to view -->
     <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/tBo4lie.jpg')" role="button"><img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb"></div>
-    <div class="item" title="Notes">📋</div>
+    <!-- NOTE item removed as requested -->
   </div>
 
   <div class="label" style="color:#ff7fa2">BETVISA</div>
@@ -61,7 +66,6 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
     <div class="item"><img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo"></div>
     <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://betvisafun.com/page/affiliate/login.jsp')">Login</a></div>
     <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/0VmRZhM.jpg')" role="button"><img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb"></div>
-    <div class="item" title="Notes">📋</div>
   </div>
 
   <div class="player-section">PLAYER ACCOUNT DETAILS</div>
@@ -80,19 +84,21 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
     </div>
   </div>
 
-  <div class="copy-row" style="margin-top:18px;">
-    <button class="copy-btn" onclick="requirePinThenShow('jeetwin')">Copy JEETWIN Info</button>
-    <button class="copy-btn" onclick="requirePinThenShow('betvisa')">Copy BETVISA Info</button>
+  <!-- COPY buttons: single line -->
+  <div class="copy-row inline" style="margin-top:18px;">
+    <button class="copy-btn" onclick="copyAffiliate('jeetwin')">Copy JEETWIN Info</button>
+    <button class="copy-btn" onclick="copyAffiliate('betvisa')">Copy BETVISA Info</button>
   </div>
+
 </div>
 
-<!-- image viewer -->
+<!-- image viewer modal -->
 <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9997;align-items:center;justify-content:center;">
   <div style="position:absolute;right:18px;top:18px;color:white;font-size:28px;cursor:pointer;" onclick="closeModal()">✖</div>
   <img id="modal-img" src="" alt="full image view" style="max-width:95%;max-height:95%;border-radius:10px;">
 </div>
 
-<!-- PIN modal (NO session saving) -->
+<!-- PIN modal -->
 <div id="pinModal" style="display:none;align-items:center;justify-content:center;">
   <div class="pin-box" role="dialog" aria-modal="true">
     <h3>Enter Security PIN</h3>
@@ -105,7 +111,7 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
   </div>
 </div>
 
-<!-- info modal -->
+<!-- info modal (not used for copy buttons — copy is direct) -->
 <div id="infoModal" style="display:none;align-items:center;justify-content:center;">
   <div class="info-card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -113,7 +119,7 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
         <strong id="infoTitle">AFFILIATE DETAILS</strong>
         <div id="infoBody" style="margin-top:8px;color:#dfeeff;font-size:14px;white-space:pre-line;"></div>
         <div class="info-actions">
-          <button onclick="copyShownInfo()" class="copy-btn" style="min-width:140px;">Copy shown info</button>
+          <button onclick="copyShownInfo()" class="copy-btn small">Copy shown info</button>
           <button onclick="closeInfo()" class="btn-cancel" style="padding:10px 12px;">Close</button>
         </div>
       </div>
@@ -125,17 +131,16 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 </div>
 
 <script>
-// ===== config =====
+// ===== CONFIG =====
 const PIN = '2393';
 
-// hidden affiliate data (not in visible DOM)
+// AFF data stored only in JS (not visible in DOM)
 const AFF = {
   jeetwin: `JEETWIN AFFILIATE DETAILS
 Username: affuzzaman
 Account Status: Active
 Phone: +8801979990349
 Email: smakerruzzamanripon@gmail.com`,
-
   betvisa: `BETVISA AFFILIATE DETAILS
 Username: ukilaff
 Account Status: Active
@@ -143,19 +148,8 @@ Phone: +8801716214561
 Email: smukiluddin@gmail.com`
 };
 
-// helpers for modals
-function requirePinThenShow(key){
-  // open PIN modal and remember requested key in dataset
-  const pin = document.getElementById('pinModal');
-  pin.dataset.request = key;
-  document.getElementById('pinInput').value = '';
-  document.getElementById('pinError').textContent = '';
-  pin.style.display = 'flex';
-  document.getElementById('pinInput').focus();
-}
-
+// ----------------- PIN flow -----------------
 function requirePinThenOpen(url){
-  // For "Login" links: require PIN then open the URL in new tab AFTER correct PIN.
   const pin = document.getElementById('pinModal');
   pin.dataset.request = 'open:'+url;
   document.getElementById('pinInput').value = '';
@@ -183,19 +177,13 @@ function verifyPin(){
   if(!v){ document.getElementById('pinError').textContent = 'Enter PIN.'; return; }
   const req = document.getElementById('pinModal').dataset.request || '';
   if(v === PIN){
-    // correct PIN — handle request (always per-attempt; no session saved)
     document.getElementById('pinModal').style.display = 'none';
     if(req.startsWith('open:')){
       const url = req.slice(5);
-      // open in new tab
       window.open(url, '_blank', 'noopener');
     } else if(req.startsWith('img:')){
       const src = req.slice(4);
       openModalImg(src);
-    } else if(req){
-      // show affiliate info modal for key
-      const key = req;
-      showInfoFor(key);
     }
     delete document.getElementById('pinModal').dataset.request;
     document.getElementById('pinInput').value = '';
@@ -204,41 +192,40 @@ function verifyPin(){
   }
 }
 
-// show info modal
-function showInfoFor(key){
-  const txt = AFF[key];
-  if(!txt) return;
-  document.getElementById('infoTitle').textContent = (key==='jeetwin' ? 'JEETWIN Details' : 'BETVISA Details');
-  document.getElementById('infoBody').textContent = txt;
-  document.getElementById('infoModal').style.display = 'flex';
-}
-
-// copy shown info
-function copyShownInfo(){
-  const txt = document.getElementById('infoBody').textContent;
-  if(!txt) return;
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(txt).then(()=> alert('Copied Successfully ✓'));
-  } else {
-    const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); alert('Copied Successfully ✓'); } catch(e){ window.prompt('Copy text:', txt); }
-    document.body.removeChild(ta);
-  }
-  closeInfo();
-}
-
-function closeInfo(){ document.getElementById('infoModal').style.display = 'none'; document.getElementById('infoBody').textContent=''; }
-
 // image modal open/close
 function openModalImg(src){ document.getElementById('modal-img').src = src; document.getElementById('modal').style.display = 'flex'; }
 function closeModal(){ document.getElementById('modal').style.display = 'none'; document.getElementById('modal-img').src = ''; }
 
+// ----------------- Copy buttons (NO PIN) -----------------
+function copyAffiliate(key){
+  const txt = AFF[key];
+  if(!txt) return alert('No data.');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=> alert('Copied Successfully ✓'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); alert('Copied Successfully ✓'); } catch(e){ window.prompt('Copy the text below:', txt); }
+    document.body.removeChild(ta);
+  }
+}
+
+// optional: show info modal (not required by you, kept only if needed)
+function copyShownInfo(){
+  const txt = document.getElementById('infoBody').textContent;
+  if(!txt) return;
+  navigator.clipboard.writeText(txt).then(()=> alert('Copied Successfully ✓'));
+  closeInfo();
+}
+function closeInfo(){ document.getElementById('infoModal').style.display = 'none'; document.getElementById('infoBody').textContent = ''; }
+
 // ESC handling
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
-    if(document.getElementById('pinModal').style.display === 'flex') closePin();
-    else if(document.getElementById('infoModal').style.display === 'flex') closeInfo();
+    const pin = document.getElementById('pinModal');
+    if(pin.style.display === 'flex') closePin();
     else if(document.getElementById('modal').style.display === 'flex') closeModal();
+    else if(document.getElementById('infoModal').style.display === 'flex') closeInfo();
   }
 });
 </script>
