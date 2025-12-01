@@ -22,6 +22,8 @@ body{
   font-family:Inter,system-ui;
   display:flex;
   justify-content:center;
+  min-height:100vh;
+  align-items:flex-start;
 }
 
 .card{
@@ -34,6 +36,7 @@ body{
   border:1px solid rgba(255,255,255,0.05);
 }
 
+/* Title + header */
 .title{
   color:var(--accent);
   font-size:22px;
@@ -42,13 +45,11 @@ body{
   text-transform:uppercase;
   margin-bottom:2px;
 }
-
 .subtitle{
   color:#9cb3d9;
   font-size:13px;
   margin-bottom:18px;
 }
-
 .label{
   color:#ffd37b;
   font-size:14px;
@@ -56,7 +57,7 @@ body{
   margin:10px 0 8px;
 }
 
-/* FIXED: Same size 4-box row */
+/* Row of 4 boxes */
 .row{
   width:100%;
   display:flex;
@@ -65,8 +66,6 @@ body{
   gap:8px;
   margin-bottom:14px;
 }
-
-/* All 4 items same size */
 .item{
   width:25%;
   height:60px;
@@ -82,14 +81,7 @@ body{
   font-weight:700;
   color:white;
 }
-
-/* Logo */
-.item img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  border-radius:8px;
-}
+.item img{ width:100%; height:100%; object-fit:contain; border-radius:8px; }
 
 /* Login button (same size box) */
 .login-btn{
@@ -106,200 +98,163 @@ body{
   font-size:14px;
 }
 
-/* Photo thumb */
-.thumb img{
-  object-fit:cover;
-}
-
-/* Copy */
-.copy-btn{
-  font-size:26px;
-  cursor:pointer;
-}
-
-/* Image modal */
-#modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.9);
-  backdrop-filter:blur(6px);
-  z-index:9999;
-  justify-content:center;
-  align-items:center;
-}
-
-#modal img{
-  max-width:95%;
-  max-height:95%;
-  border-radius:10px;
-}
-
-.close{
-  position:absolute;
-  top:20px;
-  right:20px;
-  color:white;
-  font-size:32px;
-  cursor:pointer;
-  font-weight:900;
-}
-
-/* responsive tweaks */
-@media (max-width:420px){
-  .item{height:56px}
-  .title{font-size:18px}
-  .login-btn{font-size:13px}
-}
-
-/* ========== NEW: prettier thumbnail styles ========== */
-.thumbs-row{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  margin-top:14px;
-  padding:6px 0 2px;
-}
-
-/* thumb card wrapper to create premium plate look */
+/* thumbnails row (player cards) */
+.thumbs-row{ display:flex; gap:12px; justify-content:center; margin-top:14px; padding:6px 0 2px; }
 .thumb-card{
   width:42%;
   height:120px;
   border-radius:14px;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   padding:8px;
-  box-shadow:
-    0 8px 20px rgba(2,8,20,0.6),        /* outer deep shadow */
-    inset 0 1px 0 rgba(255,255,255,0.02);/* subtle inner sheen */
+  box-shadow:0 8px 20px rgba(2,8,20,0.6);
   border:1px solid rgba(255,255,255,0.035);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:visible;
-  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:visible; cursor:pointer;
   transition:transform .25s ease, box-shadow .25s ease;
 }
-
-/* image within card: rounded and slightly elevated */
 .thumb-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:10px;
-  display:block;
-  box-shadow:0 10px 30px rgba(4,20,40,0.6);
-  transition:transform .35s ease;
+  width:100%; height:100%; object-fit:cover; border-radius:10px; display:block;
+  box-shadow:0 10px 30px rgba(4,20,40,0.6); transition:transform .35s ease;
 }
-
-/* golden badge on top-left */
 .thumb-badge{
-  position:absolute;
-  left:10px;
-  top:8px;
-  background:linear-gradient(180deg,#f6c84c,#eebb3e);
-  color:#071017;
-  padding:6px 8px;
-  border-radius:8px;
-  font-weight:900;
-  font-size:12px;
-  box-shadow:0 6px 16px rgba(230,200,80,0.12);
-  z-index:6;
-  letter-spacing:0.04em;
+  position:absolute; left:10px; top:8px; background:linear-gradient(180deg,#f6c84c,#eebb3e);
+  color:#071017; padding:6px 8px; border-radius:8px; font-weight:900; font-size:12px;
+  box-shadow:0 6px 16px rgba(230,200,80,0.12); z-index:6; letter-spacing:0.04em;
 }
-
-/* subtle caption at bottom */
 .thumb-caption{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  background:rgba(2,6,20,0.6);
+  position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted);
+  padding:6px 8px; border-radius:8px; font-size:12px; z-index:6; border:1px solid rgba(255,255,255,0.02);
+}
+.thumb-card:hover{ transform:translateY(-6px) scale(1.01); box-shadow:0 18px 45px rgba(2,8,20,0.75);}
+.thumb-card:hover img{ transform:scale(1.04); }
+
+/* small card body for affiliate details below PIN */
+.aff-details{
+  margin-top:14px;
+  background:rgba(255,255,255,0.02);
+  padding:12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.03);
   color:var(--muted);
-  padding:6px 8px;
-  border-radius:8px;
-  font-size:12px;
-  z-index:6;
-  border:1px solid rgba(255,255,255,0.02);
+  font-size:14px;
 }
+.aff-details b{ color:var(--white); }
 
-/* hover interactions: scale image slightly and lift card */
-.thumb-card:hover{
-  transform:translateY(-6px) scale(1.01);
-  box-shadow:
-    0 18px 45px rgba(2,8,20,0.75),
-    inset 0 1px 0 rgba(255,255,255,0.02);
-}
-.thumb-card:hover img{
-  transform:scale(1.04);
-}
+/* Modal for image preview */
+#modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); backdrop-filter:blur(6px); z-index:9999; justify-content:center; align-items:center; }
+#modal img{ max-width:95%; max-height:95%; border-radius:10px; }
+.close{ position:absolute; top:20px; right:20px; color:white; font-size:32px; cursor:pointer; font-weight:900; }
 
-/* mobile: stack and adjust sizes */
+/* PIN overlay (centered) */
+#pin-overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.78));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+}
+.pin-box{
+  width:92%;
+  max-width:420px;
+  background:linear-gradient(180deg,#071a26,#041018);
+  border-radius:14px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
+  text-align:center;
+}
+.pin-box h2{ color:var(--accent); margin:0 0 8px; font-size:20px; }
+.pin-box p{ color:var(--muted); margin:0 0 14px; font-size:13px; }
+.pin-input{
+  width:100%;
+  padding:12px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  color:var(--muted);
+  font-size:16px;
+  text-align:center;
+  margin-bottom:10px;
+}
+.pin-actions{ display:flex; gap:10px; justify-content:center; }
+.pin-actions button{
+  padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:800;
+}
+.btn-accept{ background:linear-gradient(180deg,#2b9f92,#1f7f6e); color:white; }
+.btn-cancel{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); }
+
+/* hide main content while locked */
+.locked{ filter:blur(0.2px); opacity:0.6; pointer-events:none; user-select:none; }
+
+/* responsive tweaks */
 @media (max-width:420px){
-  .thumb-card{width:100%;height:150px}
-  .thumb-badge{left:12px;top:10px}
-  .thumb-caption{right:12px;bottom:12px}
+  .item{height:56px}
+  .title{font-size:18px}
+  .login-btn{font-size:13px}
+  .thumb-card{height:150px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<!-- PIN overlay: shows until correct PIN entered -->
+<div id="pin-overlay" aria-hidden="false">
+  <div class="pin-box" role="dialog" aria-labelledby="pin-title">
+    <h2 id="pin-title">Enter Security PIN</h2>
+    <p>Enter your secret PIN to reveal affiliate & player details.</p>
 
+    <input id="pinInput" class="pin-input" type="password" inputmode="numeric" placeholder="Enter PIN" aria-label="Enter PIN" />
+
+    <div class="pin-actions">
+      <button class="btn-accept" id="pinBtn">Access</button>
+      <button class="btn-cancel" id="pinCancel">Cancel</button>
+    </div>
+
+    <p id="pinErr" style="color:#ff8383;margin-top:10px;display:none;font-weight:700;">Wrong PIN — Try again</p>
+    <p style="color:var(--muted);margin-top:8px;font-size:12px;">(PIN is stored locally for this browser session)</p>
+  </div>
+</div>
+
+<!-- MAIN content: keep same structure as you had -->
+<div id="mainWrapper" class="card locked" aria-hidden="true">
   <div class="title">ALL IN ONE</div>
   <div class="subtitle">Quick access — login links & details</div>
 
   <!-- JEETWIN -->
   <div class="label">JEETWIN</div>
-
   <div class="row">
     <div class="item"><img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo"></div>
-
     <div class="item">
       <a class="login-btn" href="https://jee2win.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a>
     </div>
-
     <div class="item thumb" onclick="openModal('https://i.imgur.com/tBo4lie.jpg')" role="button">
       <img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb">
     </div>
-
     <div class="item copy-btn" onclick="copyText('jeetwin')" title="Copy JEETWIN details">📋</div>
   </div>
 
   <!-- BETVISA -->
   <div class="label" style="color:#ff7fa2">BETVISA</div>
-
   <div class="row">
     <div class="item"><img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo"></div>
-
     <div class="item">
       <a class="login-btn" href="https://betvisafun.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a>
     </div>
-
     <div class="item thumb" onclick="openModal('https://i.imgur.com/0VmRZhM.jpg')" role="button">
       <img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb">
     </div>
-
     <div class="item copy-btn" onclick="copyText('betvisa')" title="Copy BETVISA details">📋</div>
   </div>
 
-  <!-- ⭐ ADDED SECTION (ONLY THIS PART ADDED) -->
-  <div style="
-    margin-top:20px;
-    padding:14px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:12px;
-    color:#e6f0ff;
-    font-size:15px;
-    font-weight:800;
-    text-align:center;
-    letter-spacing:0.5px;
-  ">
+  <!-- Added Section: PLAYER ACCOUNT DETAILS -->
+  <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:#e6f0ff;font-size:15px;font-weight:800;text-align:center;letter-spacing:0.5px;">
     PLAYER ACCOUNT DETAILS
   </div>
 
-  <!-- ------------ prettier thumbnails (only changed area) ------------ -->
+  <!-- Prettier thumbnails -->
   <div class="thumbs-row" aria-hidden="false">
 
     <div class="thumb-card" onclick="openModal('https://i.imgur.com/Jap0uB1.jpg')" title="Jeetwin player photo — Open larger">
@@ -315,17 +270,86 @@ body{
     </div>
 
   </div>
-  <!-- ------------ end prettier thumbnails ------------ -->
+
+  <!-- Affiliate details block (hidden until PIN ok) -->
+  <div id="affBlock" class="aff-details" style="display:none">
+    <h3 style="color:var(--accent);margin:0 0 6px">Affiliate Details</h3>
+    <p><b>Affiliate ID:</b> 2393</p>
+    <p><b>User:</b> bdbet21</p>
+    <p><b>Website:</b> <a href="https://bdbet21.github.io/affinfo/" target="_blank" style="color:var(--muted)">https://bdbet21.github.io/affinfo/</a></p>
+    <div style="margin-top:8px">
+      <button class="btn-accept" onclick="copyText('jeetwin')" style="padding:8px 12px;border-radius:8px;border:0">Copy JEETWIN Info</button>
+      <button class="btn-accept" onclick="copyText('betvisa')" style="padding:8px 12px;border-radius:8px;border:0;margin-left:8px">Copy BETVISA Info</button>
+    </div>
+  </div>
 
 </div>
 
-<!-- Modal -->
+<!-- Image Modal -->
 <div id="modal" aria-hidden="true" onclick="closeModal()">
   <div class="close" onclick="closeModal()">✖</div>
   <img id="modal-img" src="" alt="full image view">
 </div>
 
 <script>
+/* ------------------ PIN logic ------------------ */
+/* Set this PIN value to whatever you want */
+const SECRET_PIN = "2393";
+const overlay = document.getElementById('pin-overlay');
+const mainWrap = document.getElementById('mainWrapper');
+const affBlock = document.getElementById('affBlock');
+const pinInput = document.getElementById('pinInput');
+const pinBtn = document.getElementById('pinBtn');
+const pinCancel = document.getElementById('pinCancel');
+const pinErr = document.getElementById('pinErr');
+
+function unlockUI(){
+  overlay.style.display = 'none';
+  mainWrap.classList.remove('locked');
+  mainWrap.setAttribute('aria-hidden','false');
+  affBlock.style.display = 'block';
+  // store so user doesn't need to re-enter
+  try { localStorage.setItem('aff_access','1'); } catch(e){}
+}
+
+function lockUI(){
+  overlay.style.display = 'flex';
+  mainWrap.classList.add('locked');
+  mainWrap.setAttribute('aria-hidden','true');
+  affBlock.style.display = 'none';
+}
+
+pinBtn.addEventListener('click', function(){
+  const v = (pinInput.value || '').trim();
+  if(v === SECRET_PIN){
+    pinErr.style.display = 'none';
+    unlockUI();
+  } else {
+    pinErr.style.display = 'block';
+    setTimeout(()=> pinErr.style.display = 'none',2000);
+  }
+});
+pinInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter') pinBtn.click();
+});
+pinCancel.addEventListener('click', function(){
+  pinInput.value = '';
+  pinErr.style.display = 'none';
+  // optional: close overlay but keep locked (we'll keep it visible per UX)
+});
+
+/* check localStorage on load */
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    if(localStorage.getItem('aff_access') === '1'){
+      unlockUI();
+    } else {
+      lockUI();
+    }
+  }catch(e){ lockUI(); }
+});
+
+/* ------------------ copy & modal code (kept from your original) ------------------ */
 const TEXT = {
 jeetwin:`JEETWIN AFFILIATE DETAILS
 
@@ -368,16 +392,14 @@ Email: smukiluddin@gmail.com`
 
 function copyText(key){
   const txt = TEXT[key];
-  if(!txt) return;
+  if(!txt) return alert('No text found for ' + key);
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(txt).then(()=> alert("Copied Successfully ✓"));
   } else {
-    // fallback
     const ta = document.createElement('textarea');
-    ta.value = txt;
-    document.body.appendChild(ta);
+    ta.value = txt; document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); alert("Copied Successfully ✓"); } catch(e){ window.prompt("Copy the text below:", txt); }
+    try{ document.execCommand('copy'); alert("Copied Successfully ✓"); }catch(e){ window.prompt("Copy the text below:", txt); }
     document.body.removeChild(ta);
   }
 }
@@ -391,7 +413,6 @@ function openModal(src){
   modal.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
 }
-
 function closeModal(){
   const modal = document.getElementById("modal");
   modal.style.display = "none";
@@ -399,10 +420,7 @@ function closeModal(){
   document.getElementById("modal-img").src = "";
   document.body.style.overflow = '';
 }
-
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape') closeModal();
-});
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeModal(); });
 </script>
 
 </body>
