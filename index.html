@@ -5,58 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>All In One — Premium</title>
 <style>
-:root{
-  --bg:#020416;
-  --card:#071428;
-  --accent:#f6c84c;
-  --pill:#071a33;
-  --muted:#9cb3d9;
-}
-body{
-  margin:0;
-  padding:22px;
-  background:var(--bg);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
-  display:flex;
-  justify-content:center;
-}
-.card{
-  width:100%;
-  max-width:820px;
-  background:linear-gradient(180deg,#061527,#04101f);
-  border-radius:16px;
-  padding:22px;
-  box-shadow:0 20px 80px rgba(0,0,0,0.8);
-  border:1px solid rgba(255,255,255,0.05);
-  color:#e6f0ff;
-}
+:root{ --bg:#020416; --card:#071428; --accent:#f6c84c; --muted:#9cb3d9; }
+body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; display:flex; justify-content:center; }
+.card{ width:100%; max-width:820px; background:linear-gradient(180deg,#061527,#04101f); border-radius:16px; padding:22px; box-shadow:0 20px 80px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.05); color:#e6f0ff; }
 .title{ color:var(--accent); font-size:22px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px;}
 .subtitle{ color:var(--muted); font-size:13px; margin-bottom:18px;}
 .label{ color:#ffd37b; font-size:14px; font-weight:800; margin:10px 0 8px;}
-
-/* grid rows */
 .row{ display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap;}
 .item{ width:72px; height:72px; background:#0a1c33; border:1px solid rgba(255,255,255,0.06); border-radius:12px; display:flex; align-items:center; justify-content:center; padding:6px; box-shadow:0 10px 25px rgba(0,0,0,0.45); font-size:12px; font-weight:700; color:white;}
 .item img{ width:100%; height:100%; object-fit:contain; border-radius:8px;}
 .login-btn{ width:100%; height:100%; background:linear-gradient(180deg,#f6c84c,#eebb3e); border-radius:10px; color:black; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:14px;}
 .thumb img{ object-fit:cover; border-radius:8px;}
-
-/* player area */
 .player-section{ margin-top:18px; padding:16px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.03); text-align:center; font-weight:800; letter-spacing:0.4px;}
-
-/* thumbs row */
 .thumbs-row{ display:flex; gap:16px; justify-content:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap;}
 .thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease;}
 .thumb-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; display:block;}
 .thumb-badge{ position:absolute; left:12px; top:8px; background:linear-gradient(180deg,#f6c84c,#eebb3e); color:#071017; padding:6px 8px; border-radius:8px; font-weight:900; font-size:12px; z-index:6;}
 .thumb-caption{ position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted); padding:6px 8px; border-radius:8px; font-size:12px; z-index:6;}
 .thumb-card:hover{ transform:translateY(-6px) scale(1.01); }
-
-/* copy buttons one line */
 .copy-row{ display:flex; gap:12px; justify-content:center; margin-top:16px; flex-wrap:wrap;}
 .copy-btn{ background:#1e7f63; color:white; padding:12px 18px; border-radius:10px; border:0; font-weight:800; cursor:pointer; min-width:180px;}
-
-/* PIN modal */
 #pinModal{ display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
 .pin-box{ width:92%; max-width:420px; background:#071428; padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); text-align:center;}
 .pin-box h3{ margin:0 0 12px; color:var(--accent); font-size:18px;}
@@ -65,21 +33,13 @@ body{
 .pin-box button{ padding:10px 14px; border-radius:8px; border:0; cursor:pointer; font-weight:700;}
 .btn-cancel{ background:#2b3946; color:#fff;}
 .btn-ok{ background:#1e7f63; color:#fff;}
-
-/* small info modal when PIN ok */
 #infoModal{ display:none; position:fixed; inset:0; z-index:9998; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; }
 .info-card{ width:94%; max-width:520px; background:#0b1622; padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); color:#eef6ff;}
 .info-row{ display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;}
 .info-left{ flex:1; min-width:200px;}
 .info-actions{ display:flex; gap:10px; align-items:center; margin-top:12px;}
 .small-muted{ color:var(--muted); font-size:13px;}
-
-/* responsive */
-@media (max-width:520px){
-  .thumb-card{ width:100%; height:150px;}
-  .item{ width:65px; height:65px;}
-  .copy-btn{ min-width:140px;}
-}
+@media (max-width:520px){ .thumb-card{ width:100%; height:150px;} .item{ width:65px; height:65px;} .copy-btn{ min-width:140px;} }
 </style>
 </head>
 <body>
@@ -88,56 +48,51 @@ body{
   <div class="title">ALL IN ONE</div>
   <div class="subtitle">Quick access — login links & details</div>
 
-  <!-- JEETWIN row -->
   <div class="label">JEETWIN</div>
   <div class="row">
     <div class="item"><img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo"></div>
-    <div class="item"><a class="login-btn" href="https://jee2win.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a></div>
-    <div class="item thumb" onclick="openModal('https://i.imgur.com/tBo4lie.jpg')" role="button"><img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb"></div>
+    <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://jee2win.com/page/affiliate/login.jsp')">Login</a></div>
+    <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/tBo4lie.jpg')" role="button"><img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb"></div>
     <div class="item" title="Notes">📋</div>
   </div>
 
-  <!-- BETVISA row -->
   <div class="label" style="color:#ff7fa2">BETVISA</div>
   <div class="row">
     <div class="item"><img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo"></div>
-    <div class="item"><a class="login-btn" href="https://betvisafun.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a></div>
-    <div class="item thumb" onclick="openModal('https://i.imgur.com/0VmRZhM.jpg')" role="button"><img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb"></div>
+    <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://betvisafun.com/page/affiliate/login.jsp')">Login</a></div>
+    <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/0VmRZhM.jpg')" role="button"><img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb"></div>
     <div class="item" title="Notes">📋</div>
   </div>
 
   <div class="player-section">PLAYER ACCOUNT DETAILS</div>
 
   <div class="thumbs-row" aria-hidden="false">
-    <div class="thumb-card" onclick="openModal('https://i.imgur.com/Jap0uB1.jpg')" title="Jeetwin player photo — Open larger">
+    <div class="thumb-card" onclick="requirePinThenOpenImage('https://i.imgur.com/Jap0uB1.jpg')">
       <div class="thumb-badge">JEETWIN</div>
       <img src="https://i.imgur.com/Jap0uB1.jpg" alt="Jeetwin player photo">
       <div class="thumb-caption">Verified • Player</div>
     </div>
 
-    <div class="thumb-card" onclick="openModal('https://i.imgur.com/40JRb2u.jpg')" title="Betvisa player photo — Open larger">
+    <div class="thumb-card" onclick="requirePinThenOpenImage('https://i.imgur.com/40JRb2u.jpg')">
       <div class="thumb-badge" style="background:linear-gradient(180deg,#ff7fa2,#ff6fa2);color:#1b0b12">BETVISA</div>
       <img src="https://i.imgur.com/40JRb2u.jpg" alt="Betvisa player photo">
       <div class="thumb-caption">Verified • Player</div>
     </div>
   </div>
 
-  <!-- COPY buttons (one-line) -->
   <div class="copy-row" style="margin-top:18px;">
-    <button class="copy-btn" onclick="requestPinThenCopy('jeetwin')">Copy JEETWIN Info</button>
-    <button class="copy-btn" onclick="requestPinThenCopy('betvisa')">Copy BETVISA Info</button>
+    <button class="copy-btn" onclick="requirePinThenShow('jeetwin')">Copy JEETWIN Info</button>
+    <button class="copy-btn" onclick="requirePinThenShow('betvisa')">Copy BETVISA Info</button>
   </div>
-
-  <!-- NOTE: affiliate details are intentionally removed from page markup (hidden) -->
 </div>
 
-<!-- Image modal (view larger) -->
+<!-- image viewer -->
 <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9997;align-items:center;justify-content:center;">
   <div style="position:absolute;right:18px;top:18px;color:white;font-size:28px;cursor:pointer;" onclick="closeModal()">✖</div>
   <img id="modal-img" src="" alt="full image view" style="max-width:95%;max-height:95%;border-radius:10px;">
 </div>
 
-<!-- PIN modal -->
+<!-- PIN modal (NO session saving) -->
 <div id="pinModal" style="display:none;align-items:center;justify-content:center;">
   <div class="pin-box" role="dialog" aria-modal="true">
     <h3>Enter Security PIN</h3>
@@ -150,7 +105,7 @@ body{
   </div>
 </div>
 
-<!-- Info modal (shows details after PIN) -->
+<!-- info modal -->
 <div id="infoModal" style="display:none;align-items:center;justify-content:center;">
   <div class="info-card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -163,93 +118,87 @@ body{
         </div>
       </div>
       <div style="min-width:120px;text-align:right;">
-        <small class="small-muted">Session: secure</small>
+        <small class="small-muted">Security: PIN required each time</small>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-/*
- Behavior:
- - AFFILIATE details are stored here (hidden from page). They are only revealed / copied after correct PIN.
- - PIN is '2393' by default. You can change PIN below.
- - Session: once unlocked, sessionStorage keeps 'unlocked' flag for this tab. On close/reopen it requires PIN again.
-*/
+// ===== config =====
+const PIN = '2393';
 
-// === Configuration (change PIN here if needed) ===
-const CONFIG = {
-  PIN: '2393',          // change PIN if you want
-  sessionKey: 'affinfo_unlocked_v1' // sessionStorage key
-};
-
-// hidden data (not visible on page)
+// hidden affiliate data (not in visible DOM)
 const AFF = {
   jeetwin: `JEETWIN AFFILIATE DETAILS
 Username: affuzzaman
 Account Status: Active
-First Name: affuzzaman
-Last Name: affuzzaman
-Approved: 2025/11/07 14:58:24
-Referral Code: 3IKzdxYz
-Phone1: +8801979990349
-Phone2: +8801806102635
+Phone: +8801979990349
 Email: smakerruzzamanripon@gmail.com`,
+
   betvisa: `BETVISA AFFILIATE DETAILS
 Username: ukilaff
 Account Status: Active
-First Name: ukilaff
-Last Name: ukilaff
-Approved: 2025/11/11 14:39:21
-Referral Code: U40cl0QS
-Phone1: +8801716214561
-Phone2: +8801806102635
+Phone: +8801716214561
 Email: smukiluddin@gmail.com`
 };
 
-// UI helpers
-function openModal(src){
-  const m = document.getElementById('modal');
-  const img = document.getElementById('modal-img');
-  img.src = src;
-  m.style.display = 'flex';
-}
-function closeModal(){
-  const m = document.getElementById('modal');
-  m.style.display = 'none';
-  document.getElementById('modal-img').src = '';
-}
-
-// PIN modal flow
-let pendingKey = null;
-function requestPinThenCopy(key){
-  // Save which data requested
-  pendingKey = key;
-  // If already unlocked this session -> directly copy/show
-  if(sessionStorage.getItem(CONFIG.sessionKey) === '1'){
-    showInfoFor(key);
-    return;
-  }
-  // show PIN modal
+// helpers for modals
+function requirePinThenShow(key){
+  // open PIN modal and remember requested key in dataset
+  const pin = document.getElementById('pinModal');
+  pin.dataset.request = key;
   document.getElementById('pinInput').value = '';
   document.getElementById('pinError').textContent = '';
-  const pm = document.getElementById('pinModal');
-  pm.style.display = 'flex';
+  pin.style.display = 'flex';
   document.getElementById('pinInput').focus();
 }
+
+function requirePinThenOpen(url){
+  // For "Login" links: require PIN then open the URL in new tab AFTER correct PIN.
+  const pin = document.getElementById('pinModal');
+  pin.dataset.request = 'open:'+url;
+  document.getElementById('pinInput').value = '';
+  document.getElementById('pinError').textContent = '';
+  pin.style.display = 'flex';
+  document.getElementById('pinInput').focus();
+}
+
+function requirePinThenOpenImage(src){
+  const pin = document.getElementById('pinModal');
+  pin.dataset.request = 'img:'+src;
+  document.getElementById('pinInput').value = '';
+  document.getElementById('pinError').textContent = '';
+  pin.style.display = 'flex';
+  document.getElementById('pinInput').focus();
+}
+
 function closePin(){
   document.getElementById('pinModal').style.display = 'none';
-  pendingKey = null;
+  delete document.getElementById('pinModal').dataset.request;
 }
+
 function verifyPin(){
   const v = document.getElementById('pinInput').value.trim();
-  if(!v){ document.getElementById('pinError').textContent = 'Please enter PIN.'; return; }
-  if(v === CONFIG.PIN){
-    // success
-    sessionStorage.setItem(CONFIG.sessionKey, '1'); // unlocked for this session/tab
+  if(!v){ document.getElementById('pinError').textContent = 'Enter PIN.'; return; }
+  const req = document.getElementById('pinModal').dataset.request || '';
+  if(v === PIN){
+    // correct PIN — handle request (always per-attempt; no session saved)
     document.getElementById('pinModal').style.display = 'none';
-    if(pendingKey) showInfoFor(pendingKey);
-    pendingKey = null;
+    if(req.startsWith('open:')){
+      const url = req.slice(5);
+      // open in new tab
+      window.open(url, '_blank', 'noopener');
+    } else if(req.startsWith('img:')){
+      const src = req.slice(4);
+      openModalImg(src);
+    } else if(req){
+      // show affiliate info modal for key
+      const key = req;
+      showInfoFor(key);
+    }
+    delete document.getElementById('pinModal').dataset.request;
+    document.getElementById('pinInput').value = '';
   } else {
     document.getElementById('pinError').textContent = '❌ Wrong PIN. Try again.';
   }
@@ -264,7 +213,7 @@ function showInfoFor(key){
   document.getElementById('infoModal').style.display = 'flex';
 }
 
-// copy from info modal (copies shown info)
+// copy shown info
 function copyShownInfo(){
   const txt = document.getElementById('infoBody').textContent;
   if(!txt) return;
@@ -272,31 +221,26 @@ function copyShownInfo(){
     navigator.clipboard.writeText(txt).then(()=> alert('Copied Successfully ✓'));
   } else {
     const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); alert('Copied Successfully ✓'); } catch(e){ window.prompt('Copy text:', txt); }
+    try{ document.execCommand('copy'); alert('Copied Successfully ✓'); } catch(e){ window.prompt('Copy text:', txt); }
     document.body.removeChild(ta);
   }
   closeInfo();
 }
 
-function closeInfo(){
-  document.getElementById('infoModal').style.display = 'none';
-}
+function closeInfo(){ document.getElementById('infoModal').style.display = 'none'; document.getElementById('infoBody').textContent=''; }
 
-// Ensure pressing ESC closes modals
+// image modal open/close
+function openModalImg(src){ document.getElementById('modal-img').src = src; document.getElementById('modal').style.display = 'flex'; }
+function closeModal(){ document.getElementById('modal').style.display = 'none'; document.getElementById('modal-img').src = ''; }
+
+// ESC handling
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
-    const pm = document.getElementById('pinModal');
-    const im = document.getElementById('infoModal');
-    const modal = document.getElementById('modal');
-    if(pm.style.display === 'flex') closePin();
-    else if(im.style.display === 'flex') closeInfo();
-    else if(modal.style.display === 'flex') closeModal();
+    if(document.getElementById('pinModal').style.display === 'flex') closePin();
+    else if(document.getElementById('infoModal').style.display === 'flex') closeInfo();
+    else if(document.getElementById('modal').style.display === 'flex') closeModal();
   }
 });
-
-// If you want to force PIN on page load (hide thumbnails until PIN) you could:
-// if(sessionStorage.getItem(CONFIG.sessionKey) !== '1') requestPinThenCopy(null);
-// but currently thumbnails and login remain visible; full affiliate details are hidden until PIN.
 </script>
 </body>
 </html>
