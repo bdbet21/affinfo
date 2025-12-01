@@ -1,120 +1,408 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<title>Secure Affiliate Info</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>All In One — Premium</title>
 
 <style>
-:root {
-  --bg:#0d1117;
-  --card:#0f1720;
-  --muted:#9aa4b2;
-  --accent:#23636c;
-  --white:#f6f8fa;
+:root{
+  --bg:#020416;
+  --card:#071428;
+  --accent:#f6c84c;
+  --pill:#071a33;
+  --muted:#9cb3d9;
 }
 
+/* ------------ unchanged global layout (kept same) ------------ */
 body{
   margin:0;
-  font-family:system-ui, Arial, sans-serif;
-  background:linear-gradient(180deg,#071016,#0d1117);
-  color:var(--white);
-  min-height:100vh;
+  padding:22px;
+  background:#020416;
+  font-family:Inter,system-ui;
   display:flex;
-  align-items:center;
   justify-content:center;
-  padding:20px;
 }
 
 .card{
   width:100%;
-  max-width:420px;
-  background:var(--card);
-  border:1px solid #20262d;
-  padding:22px;
+  max-width:450px;
+  background:linear-gradient(180deg,#061527,#04101f);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 20px 80px rgba(0,0,0,0.8);
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.title{
+  color:var(--accent);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-bottom:2px;
+}
+
+.subtitle{
+  color:#9cb3d9;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+.label{
+  color:#ffd37b;
+  font-size:14px;
+  font-weight:800;
+  margin:10px 0 8px;
+}
+
+/* FIXED: Same size 4-box row */
+.row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+/* All 4 items same size */
+.item{
+  width:25%;
+  height:60px;
+  background:#0a1c33;
+  border:1px solid rgba(255,255,255,0.07);
   border-radius:12px;
-  box-shadow:6px 6px 18px rgba(2,6,23,0.6);
-  text-align:center;
-}
-
-h2{margin:0 0 12px;font-size:20px}
-input[type="password"]{
-  width:100%;
-  padding:12px 10px;
-  border-radius:8px;
-  border:1px solid #24303a;
-  background:#071018;
-  color:var(--white);
-  margin-bottom:12px;
-  box-sizing:border-box;
-  font-size:15px;
-}
-
-button{
-  width:100%;
-  padding:11px;
-  border-radius:8px;
-  border:0;
-  background:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.45);
+  font-size:12px;
+  font-weight:700;
   color:white;
-  font-weight:600;
-  font-size:15px;
+}
+
+/* Logo */
+.item img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:8px;
+}
+
+/* Login button (same size box) */
+.login-btn{
+  width:100%;
+  height:100%;
+  background:linear-gradient(180deg,#f6c84c,#eebb3e);
+  border-radius:10px;
+  color:black;
+  font-weight:800;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+}
+
+/* Photo thumb */
+.thumb img{
+  object-fit:cover;
+}
+
+/* Copy */
+.copy-btn{
+  font-size:26px;
   cursor:pointer;
 }
 
-.content{
-  text-align:left;
+/* Image modal */
+#modal{
   display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  backdrop-filter:blur(6px);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
 }
 
-.small{color:var(--muted);font-size:13px;margin-top:8px}
+#modal img{
+  max-width:95%;
+  max-height:95%;
+  border-radius:10px;
+}
 
-a.btn{
-  display:inline-block;
-  margin-top:12px;
-  padding:10px 14px;
+.close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  color:white;
+  font-size:32px;
+  cursor:pointer;
+  font-weight:900;
+}
+
+/* responsive tweaks */
+@media (max-width:420px){
+  .item{height:56px}
+  .title{font-size:18px}
+  .login-btn{font-size:13px}
+}
+
+/* ========== NEW: prettier thumbnail styles ========== */
+.thumbs-row{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top:14px;
+  padding:6px 0 2px;
+}
+
+/* thumb card wrapper to create premium plate look */
+.thumb-card{
+  width:42%;
+  height:120px;
+  border-radius:14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:8px;
+  box-shadow:
+    0 8px 20px rgba(2,8,20,0.6),        /* outer deep shadow */
+    inset 0 1px 0 rgba(255,255,255,0.02);/* subtle inner sheen */
+  border:1px solid rgba(255,255,255,0.035);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:visible;
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+/* image within card: rounded and slightly elevated */
+.thumb-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:10px;
+  display:block;
+  box-shadow:0 10px 30px rgba(4,20,40,0.6);
+  transition:transform .35s ease;
+}
+
+/* golden badge on top-left */
+.thumb-badge{
+  position:absolute;
+  left:10px;
+  top:8px;
+  background:linear-gradient(180deg,#f6c84c,#eebb3e);
+  color:#071017;
+  padding:6px 8px;
   border-radius:8px;
-  background:#0d1120;
-  color:var(--white);
-  text-decoration:none;
-  border:1px solid #2b3942;
+  font-weight:900;
+  font-size:12px;
+  box-shadow:0 6px 16px rgba(230,200,80,0.12);
+  z-index:6;
+  letter-spacing:0.04em;
 }
 
-/* responsive */
-@media (max-width:420px){ .card{padding:16px} }
+/* subtle caption at bottom */
+.thumb-caption{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  background:rgba(2,6,20,0.6);
+  color:var(--muted);
+  padding:6px 8px;
+  border-radius:8px;
+  font-size:12px;
+  z-index:6;
+  border:1px solid rgba(255,255,255,0.02);
+}
+
+/* hover interactions: scale image slightly and lift card */
+.thumb-card:hover{
+  transform:translateY(-6px) scale(1.01);
+  box-shadow:
+    0 18px 45px rgba(2,8,20,0.75),
+    inset 0 1px 0 rgba(255,255,255,0.02);
+}
+.thumb-card:hover img{
+  transform:scale(1.04);
+}
+
+/* mobile: stack and adjust sizes */
+@media (max-width:420px){
+  .thumb-card{width:100%;height:150px}
+  .thumb-badge{left:12px;top:10px}
+  .thumb-caption{right:12px;bottom:12px}
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h2>Enter Security PIN</h2>
-  <input id="pin" type="password" placeholder="Enter PIN" />
-  <button onclick="checkPin()">Access Info</button>
-  <p id="err" class="small"></p>
 
-  <div id="info" class="content">
-    <h2>Affiliate Details</h2>
-    <p><b>Affiliate ID:</b> 2393</p>
-    <p><b>User:</b> bdbet21</p>
-    <p><b>Website:</b> https://bdbet21.github.io/affinfo/</p>
+  <div class="title">ALL IN ONE</div>
+  <div class="subtitle">Quick access — login links & details</div>
 
-    <a class="btn" href="#">Copy Affiliate Link</a>
+  <!-- JEETWIN -->
+  <div class="label">JEETWIN</div>
+
+  <div class="row">
+    <div class="item"><img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo"></div>
+
+    <div class="item">
+      <a class="login-btn" href="https://jee2win.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a>
+    </div>
+
+    <div class="item thumb" onclick="openModal('https://i.imgur.com/tBo4lie.jpg')" role="button">
+      <img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb">
+    </div>
+
+    <div class="item copy-btn" onclick="copyText('jeetwin')" title="Copy JEETWIN details">📋</div>
   </div>
+
+  <!-- BETVISA -->
+  <div class="label" style="color:#ff7fa2">BETVISA</div>
+
+  <div class="row">
+    <div class="item"><img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo"></div>
+
+    <div class="item">
+      <a class="login-btn" href="https://betvisafun.com/page/affiliate/login.jsp" target="_blank" rel="noopener">Login</a>
+    </div>
+
+    <div class="item thumb" onclick="openModal('https://i.imgur.com/0VmRZhM.jpg')" role="button">
+      <img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb">
+    </div>
+
+    <div class="item copy-btn" onclick="copyText('betvisa')" title="Copy BETVISA details">📋</div>
+  </div>
+
+  <!-- ⭐ ADDED SECTION (ONLY THIS PART ADDED) -->
+  <div style="
+    margin-top:20px;
+    padding:14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    color:#e6f0ff;
+    font-size:15px;
+    font-weight:800;
+    text-align:center;
+    letter-spacing:0.5px;
+  ">
+    PLAYER ACCOUNT DETAILS
+  </div>
+
+  <!-- ------------ prettier thumbnails (only changed area) ------------ -->
+  <div class="thumbs-row" aria-hidden="false">
+
+    <div class="thumb-card" onclick="openModal('https://i.imgur.com/Jap0uB1.jpg')" title="Jeetwin player photo — Open larger">
+      <div class="thumb-badge">JEETWIN</div>
+      <img src="https://i.imgur.com/Jap0uB1.jpg" alt="Jeetwin player photo">
+      <div class="thumb-caption">Verified • Player</div>
+    </div>
+
+    <div class="thumb-card" onclick="openModal('https://i.imgur.com/40JRb2u.jpg')" title="Betvisa player photo — Open larger">
+      <div class="thumb-badge" style="background:linear-gradient(180deg,#ff7fa2,#ff6fa2);color:#1b0b12">BETVISA</div>
+      <img src="https://i.imgur.com/40JRb2u.jpg" alt="Betvisa player photo">
+      <div class="thumb-caption">Verified • Player</div>
+    </div>
+
+  </div>
+  <!-- ------------ end prettier thumbnails ------------ -->
+
+</div>
+
+<!-- Modal -->
+<div id="modal" aria-hidden="true" onclick="closeModal()">
+  <div class="close" onclick="closeModal()">✖</div>
+  <img id="modal-img" src="" alt="full image view">
 </div>
 
 <script>
-function checkPin(){
-  const value = document.getElementById("pin").value;
-  const error = document.getElementById("err");
-  if(value === "2393"){
-    document.getElementById("info").style.display = "block";
-    document.getElementById("pin").style.display = "none";
-    error.innerHTML = "";
+const TEXT = {
+jeetwin:`JEETWIN AFFILIATE DETAILS
+
+Username: affuzzaman
+Account Status: Active
+
+First Name: affuzzaman
+Last Name: affuzzaman
+
+Approved Date & Time: 2025/11/07 14:58:24
+
+Referral Code: 3IKzdxYz
+
+Phone Number 1: +880 1979990349
+Phone Number 2: +880 1806102635
+WhatsApp: +880 1806102635
+
+Email: smakerruzzamanripon@gmail.com`,
+
+betvisa:`BETVISA AFFILIATE DETAILS
+
+Username: ukilaff
+Account Status: Active
+
+First Name: ukilaff
+Last Name: ukilaff
+
+Approved Date & Time: 2025/11/11 14:39:21
+Date of Birth: 2002-02-01
+
+Referral Code: U40cl0QS
+
+Phone Number 1: +880 1716214561
+Phone Number 2: +880 1806102635
+Phone Number 3: +880 1979990349
+WhatsApp: +880 1979990349
+
+Email: smukiluddin@gmail.com`
+};
+
+function copyText(key){
+  const txt = TEXT[key];
+  if(!txt) return;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=> alert("Copied Successfully ✓"));
   } else {
-    error.innerHTML = "❌ Wrong PIN. Try again!";
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); alert("Copied Successfully ✓"); } catch(e){ window.prompt("Copy the text below:", txt); }
+    document.body.removeChild(ta);
   }
 }
+
+function openModal(src){
+  if(!src) return;
+  const modal = document.getElementById("modal");
+  const img = document.getElementById("modal-img");
+  img.src = src;
+  modal.style.display = "flex";
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  const modal = document.getElementById("modal");
+  modal.style.display = "none";
+  modal.setAttribute('aria-hidden','true');
+  document.getElementById("modal-img").src = "";
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') closeModal();
+});
 </script>
 
 </body>
