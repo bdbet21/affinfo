@@ -1,130 +1,120 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Secure Affiliate Info</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    :root {
-      --bg:#0d1117;
-      --card:#0f1720;
-      --muted:#9aa4b2;
-      --accent:#238636;
-      --white:#f6f8fa;
-    }
-    body{
-      margin:0;
-      font-family:system-ui, Arial, sans-serif;
-      background:linear-gradient(180deg,#071016,#0d1117);
-      color:var(--white);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .card{
-      width:100%;
-      max-width:420px;
-      background:var(--card);
-      border:1px solid #20262d;
-      padding:22px;
-      border-radius:12px;
-      box-shadow:0 6px 18px rgba(2,6,23,0.6);
-      text-align:center;
-    }
-    h2{margin:0 0 12px;font-size:20px}
-    input[type="password"]{
-      width:100%;
-      padding:12px 10px;
-      border-radius:8px;
-      border:1px solid #24303a;
-      background:#071018;
-      color:var(--white);
-      margin-bottom:12px;
-      box-sizing:border-box;
-      font-size:15px;
-    }
-    button{
-      width:100%;
-      padding:11px;
-      border-radius:8px;
-      border:0;
-      background:var(--accent);
-      color:white;
-      font-weight:600;
-      font-size:15px;
-      cursor:pointer;
-    }
-    .content{
-      text-align:left;
-      display:none;
-    }
-    .small{color:var(--muted);font-size:13px;margin-top:8px}
-    a.btn{
-      display:inline-block;
-      margin-top:12px;
-      padding:10px 14px;
-      border-radius:8px;
-      background:#0b1220;
-      color:var(--white);
-      text-decoration:none;
-      border:1px solid #2b3942;
-    }
-    /* responsive */
-    @media (max-width:420px){ .card{padding:16px} }
-  </style>
+<meta charset="UTF-8">
+<title>Secure Affiliate Info</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root {
+  --bg:#0d1117;
+  --card:#0f1720;
+  --muted:#9aa4b2;
+  --accent:#23636c;
+  --white:#f6f8fa;
+}
+
+body{
+  margin:0;
+  font-family:system-ui, Arial, sans-serif;
+  background:linear-gradient(180deg,#071016,#0d1117);
+  color:var(--white);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:420px;
+  background:var(--card);
+  border:1px solid #20262d;
+  padding:22px;
+  border-radius:12px;
+  box-shadow:6px 6px 18px rgba(2,6,23,0.6);
+  text-align:center;
+}
+
+h2{margin:0 0 12px;font-size:20px}
+input[type="password"]{
+  width:100%;
+  padding:12px 10px;
+  border-radius:8px;
+  border:1px solid #24303a;
+  background:#071018;
+  color:var(--white);
+  margin-bottom:12px;
+  box-sizing:border-box;
+  font-size:15px;
+}
+
+button{
+  width:100%;
+  padding:11px;
+  border-radius:8px;
+  border:0;
+  background:var(--accent);
+  color:white;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.content{
+  text-align:left;
+  display:none;
+}
+
+.small{color:var(--muted);font-size:13px;margin-top:8px}
+
+a.btn{
+  display:inline-block;
+  margin-top:12px;
+  padding:10px 14px;
+  border-radius:8px;
+  background:#0d1120;
+  color:var(--white);
+  text-decoration:none;
+  border:1px solid #2b3942;
+}
+
+/* responsive */
+@media (max-width:420px){ .card{padding:16px} }
+</style>
 </head>
+
 <body>
 
-  <div class="card" id="locker">
-    <h2>Enter PIN to view details</h2>
-    <input id="pin" type="password" placeholder="Enter PIN">
-    <button onclick="checkPIN()">Unlock</button>
-    <div class="small">If you don't know the PIN contact the admin.</div>
+<div class="card">
+  <h2>Enter Security PIN</h2>
+  <input id="pin" type="password" placeholder="Enter PIN" />
+  <button onclick="checkPin()">Access Info</button>
+  <p id="err" class="small"></p>
+
+  <div id="info" class="content">
+    <h2>Affiliate Details</h2>
+    <p><b>Affiliate ID:</b> 2393</p>
+    <p><b>User:</b> bdbet21</p>
+    <p><b>Website:</b> https://bdbet21.github.io/affinfo/</p>
+
+    <a class="btn" href="#">Copy Affiliate Link</a>
   </div>
-
-  <div class="card content" id="content">
-    <h2>Affiliate / mssg.me Details</h2>
-
-    <!-- ===== Example affiliate content - edit these lines as needed ===== -->
-    <p><strong>Site:</strong> mssg.me/yourname</p>
-    <p><strong>Contact:</strong> +8801XXXXXXXXX</p>
-    <p><strong>Notes:</strong> Login / registration details or instructions for printer usage can go here.</p>
-
-    <!-- Example action buttons -->
-    <p>
-      <a class="btn" href="https://mssg.me" target="_blank" rel="noopener">Open mssg.me</a>
-      <a class="btn" href="#" onclick="alert('This is a demo button')">Demo Action</a>
-    </p>
-    <!-- ================================================================= -->
-
-    <div class="small">Tip: To change this content edit index.html and update the HTML inside this box.</div>
-  </div>
+</div>
 
 <script>
-  // ✅ আপনার PIN এখানে সেট করা হয়েছে:
-  var correctPIN = "2393";
-
-  function checkPIN(){
-    var entered = document.getElementById('pin').value.trim();
-    if(entered === correctPIN){
-      // hide lock, show content
-      document.getElementById('locker').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-      // clear pin field
-      document.getElementById('pin').value = '';
-    } else {
-      alert('Wrong PIN — আবার চেষ্টা করুন');
-      document.getElementById('pin').value = '';
-      document.getElementById('pin').focus();
-    }
+function checkPin(){
+  const value = document.getElementById("pin").value;
+  const error = document.getElementById("err");
+  if(value === "2393"){
+    document.getElementById("info").style.display = "block";
+    document.getElementById("pin").style.display = "none";
+    error.innerHTML = "";
+  } else {
+    error.innerHTML = "❌ Wrong PIN. Try again!";
   }
-
-  // 엔터 key support
-  document.getElementById('pin').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') checkPIN();
-  });
+}
 </script>
 
 </body>
