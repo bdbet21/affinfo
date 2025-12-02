@@ -1,49 +1,313 @@
 <!doctype html>
 <html lang="bn">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>All In One — Premium</title>
-<style>
-:root{ --bg:#020416; --card:#071428; --accent:#f6c84c; --muted:#9cb3d9; }
-body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; display:flex; justify-content:center; }
-.card{ width:100%; max-width:820px; background:linear-gradient(180deg,#061527,#04101f); border-radius:16px; padding:22px; box-shadow:0 20px 80px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.05); color:#e6f0ff; opacity:1; transition:opacity .2s ease; }
-/* CHANGED: when locked hide completely (no dim, no interaction) */
-.card.locked{ display:none !important; pointer-events:none; user-select:none; }
-.title{ color:var(--accent); font-size:22px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px;}
-.subtitle{ color:var(--muted); font-size:13px; margin-bottom:18px;}
-.label{ color:#ffd37b; font-size:14px; font-weight:800; margin:10px 0 8px;}
-.row{ display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap;}
-.item{ width:72px; height:72px; background:#0a1c33; border:1px solid rgba(255,255,255,0.06); border-radius:12px; display:flex; align-items:center; justify-content:center; padding:6px; box-shadow:0 10px 25px rgba(0,0,0,0.45); font-size:12px; font-weight:700; color:white;}
-.item img{ width:100%; height:100%; object-fit:contain; border-radius:8px;}
-.login-btn{ width:100%; height:100%; background:linear-gradient(180deg,#f6c84c,#eebb3e); border-radius:10px; color:black; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:14px;}
-.thumb img{ object-fit:cover; border-radius:8px;}
-.player-section{ margin-top:18px; padding:16px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.03); text-align:center; font-weight:800; letter-spacing:0.4px;}
-.thumbs-row{ display:flex; gap:16px; justify-content:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap;}
-.thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease;}
-.thumb-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; display:block;}
-.thumb-badge{ position:absolute; left:12px; top:8px; background:linear-gradient(180deg,#f6c84c,#eebb3e); color:#071017; padding:6px 8px; border-radius:8px; font-weight:900; font-size:12px; z-index:6;}
-.thumb-caption{ position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted); padding:6px 8px; border-radius:8px; font-size:12px; z-index:6;}
-.thumb-card:hover{ transform:translateY(-6px) scale(1.01); }
-.copy-row{ display:flex; gap:12px; justify-content:space-between; margin-top:16px; }
-.copy-btn{ background:#1e7f63; color:white; padding:12px 18px; border-radius:10px; border:0; font-weight:800; cursor:pointer; min-width:48%; text-align:center;}
-.copy-btn.small{ min-width:150px;}
-/* PIN modal */
-#pinModal{ display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
-.pin-box{ width:92%; max-width:420px; background:#071428; padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); text-align:center;}
-.pin-box h3{ margin:0 0 12px; color:var(--accent); font-size:18px;}
-.pin-box input{ width:100%; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.02); color:#fff; margin-bottom:12px; font-size:16px;}
-.pin-box .actions{ display:flex; gap:10px; justify-content:center; }
-.pin-box button{ padding:10px 14px; border-radius:8px; border:0; cursor:pointer; font-weight:700;}
-.btn-cancel{ background:#2b3946; color:#fff;}
-.btn-ok{ background:#1e7f63; color:#fff;}
-/* modal image */
-#modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:9997; justify-content:center; align-items:center;}
-#modal img{ max-width:95%; max-height:95%; border-radius:10px;}
-.close-x{ position:absolute; right:18px; top:18px; color:white; font-size:28px; cursor:pointer; z-index:10000; }
-/* responsive */
-@media (max-width:520px){ .thumb-card{ width:100%; height:150px;} .item{ width:65px; height:65px;} .copy-btn{ min-width:48%; } .copy-row{ flex-direction:row; } }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All In One — Premium</title>
+
+  <style>
+    :root{
+      --bg:#020416;
+      --card:#071428;
+      --accent:#f6c84c;
+      --muted:#9cb3d9;
+    }
+
+    body{
+      margin:0;
+      padding:22px;
+      background:var(--bg);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      display:flex;
+      justify-content:center;
+    }
+
+    .card{
+      width:100%;
+      max-width:820px;
+      background:linear-gradient(180deg,#061527,#04101f);
+      border-radius:16px;
+      padding:22px;
+      box-shadow:0 20px 80px rgba(0,0,0,0.8);
+      border:1px solid rgba(255,255,255,0.05);
+      color:#e6f0ff;
+      opacity:1;
+      transition:opacity .2s ease;
+    }
+
+    /* শুরুতে লক থাকলে একেবারে লুকানো */
+    .card.locked{
+      display:none !important;
+      pointer-events:none;
+      user-select:none;
+    }
+
+    .title{
+      color:var(--accent);
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      margin-bottom:4px;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    .label{
+      color:#ffd37b;
+      font-size:14px;
+      font-weight:800;
+      margin:10px 0 8px;
+    }
+
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+
+    .item{
+      width:72px;
+      height:72px;
+      background:#0a1c33;
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.45);
+      font-size:12px;
+      font-weight:700;
+      color:white;
+    }
+
+    .item img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius:8px;
+    }
+
+    .login-btn{
+      width:100%;
+      height:100%;
+      background:linear-gradient(180deg,#f6c84c,#eebb3e);
+      border-radius:10px;
+      color:black;
+      font-weight:800;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+    }
+
+    .thumb img{
+      object-fit:cover;
+      border-radius:8px;
+    }
+
+    .player-section{
+      margin-top:18px;
+      padding:16px;
+      background:rgba(255,255,255,0.02);
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      text-align:center;
+      font-weight:800;
+      letter-spacing:0.4px;
+    }
+
+    .thumbs-row{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      margin-top:14px;
+      padding:6px 0 2px;
+      flex-wrap:wrap;
+    }
+
+    .thumb-card{
+      width:220px;
+      height:140px;
+      border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:8px;
+      box-shadow:0 8px 20px rgba(2,8,20,0.6);
+      border:1px solid rgba(255,255,255,0.035);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+      transition:transform .25s ease;
+    }
+
+    .thumb-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+    }
+
+    .thumb-badge{
+      position:absolute;
+      left:12px;
+      top:8px;
+      background:linear-gradient(180deg,#f6c84c,#eebb3e);
+      color:#071017;
+      padding:6px 8px;
+      border-radius:8px;
+      font-weight:900;
+      font-size:12px;
+      z-index:6;
+    }
+
+    .thumb-caption{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      background:rgba(2,6,20,0.6);
+      color:var(--muted);
+      padding:6px 8px;
+      border-radius:8px;
+      font-size:12px;
+      z-index:6;
+    }
+
+    .thumb-card:hover{
+      transform:translateY(-6px) scale(1.01);
+    }
+
+    .copy-row{
+      display:flex;
+      gap:12px;
+      justify-content:space-between;
+      margin-top:18px;
+    }
+
+    .copy-btn{
+      background:#1e7f63;
+      color:white;
+      padding:12px 18px;
+      border-radius:10px;
+      border:0;
+      font-weight:800;
+      cursor:pointer;
+      min-width:48%;
+      text-align:center;
+    }
+
+    /* PIN modal */
+    #pinModal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(0,0,0,0.85);
+      backdrop-filter:blur(4px);
+      align-items:center;
+      justify-content:center;
+    }
+
+    .pin-box{
+      width:92%;
+      max-width:420px;
+      background:#071428;
+      padding:20px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.06);
+      text-align:center;
+    }
+
+    .pin-box h3{
+      margin:0 0 12px;
+      color:var(--accent);
+      font-size:18px;
+    }
+
+    .pin-box input{
+      width:100%;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.02);
+      color:#fff;
+      margin-bottom:12px;
+      font-size:16px;
+    }
+
+    .pin-box .actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
+
+    .pin-box button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .btn-cancel{
+      background:#2b3946;
+      color:#fff;
+    }
+
+    .btn-ok{
+      background:#1e7f63;
+      color:#fff;
+    }
+
+    #pinError{
+      color:#ff8080;
+      font-size:13px;
+      min-height:18px;
+    }
+
+    /* image modal */
+    #modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      z-index:9997;
+      justify-content:center;
+      align-items:center;
+    }
+
+    #modal img{
+      max-width:95%;
+      max-height:95%;
+      border-radius:10px;
+    }
+
+    .close-x{
+      position:absolute;
+      right:18px;
+      top:18px;
+      color:white;
+      font-size:28px;
+      cursor:pointer;
+      z-index:10000;
+    }
+
+    @media (max-width:520px){
+      .thumb-card{ width:100%; height:150px; }
+      .item{ width:65px; height:65px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -51,50 +315,86 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
   <div class="title">ALL IN ONE</div>
   <div class="subtitle">Quick access — login links & details</div>
 
+  <!-- JEETWIN -->
   <div class="label">JEETWIN</div>
   <div class="row">
-    <div class="item"><img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo"></div>
-    <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://jee2win.com/page/affiliate/login.jsp')">Login</a></div>
-    <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/tBo4lie.jpg')" role="button"><img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb"></div>
+    <div class="item">
+      <img src="https://i.imgur.com/njwwUUC.png" alt="jeetwin logo">
+    </div>
+
+    <div class="item">
+      <a class="login-btn"
+         href="https://jee2win.com/page/affiliate/login.jsp"
+         target="_blank" rel="noopener">
+        Login
+      </a>
+    </div>
+
+    <div class="item thumb"
+         onclick="openModalImg('https://i.imgur.com/tBo4lie.jpg')" role="button">
+      <img src="https://i.imgur.com/tBo4lie.jpg" alt="jeetwin thumb">
+    </div>
   </div>
 
+  <!-- BETVISA -->
   <div class="label" style="color:#ff7fa2">BETVISA</div>
   <div class="row">
-    <div class="item"><img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo"></div>
-    <div class="item"><a class="login-btn" href="javascript:requirePinThenOpen('https://betvisafun.com/page/affiliate/login.jsp')">Login</a></div>
-    <div class="item thumb" onclick="requirePinThenOpenImage('https://i.imgur.com/0VmRZhM.jpg')" role="button"><img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb"></div>
+    <div class="item">
+      <img src="https://i.imgur.com/ucBytl0.png" alt="betvisa logo">
+    </div>
+
+    <div class="item">
+      <a class="login-btn"
+         href="https://betvisafun.com/page/affiliate/login.jsp"
+         target="_blank" rel="noopener">
+        Login
+      </a>
+    </div>
+
+    <div class="item thumb"
+         onclick="openModalImg('https://i.imgur.com/0VmRZhM.jpg')" role="button">
+      <img src="https://i.imgur.com/0VmRZhM.jpg" alt="betvisa thumb">
+    </div>
   </div>
 
+  <!-- PLAYER DETAILS -->
   <div class="player-section">PLAYER ACCOUNT DETAILS</div>
 
-  <div class="thumbs-row" aria-hidden="false">
-    <div class="thumb-card" onclick="requirePinThenOpenImage('https://i.imgur.com/Jap0uB1.jpg')">
+  <div class="thumbs-row">
+    <div class="thumb-card" onclick="openModalImg('https://i.imgur.com/Jap0uB1.jpg')">
       <div class="thumb-badge">JEETWIN</div>
       <img src="https://i.imgur.com/Jap0uB1.jpg" alt="Jeetwin player photo">
       <div class="thumb-caption">Verified • Player</div>
     </div>
 
-    <div class="thumb-card" onclick="requirePinThenOpenImage('https://i.imgur.com/40JRb2u.jpg')">
-      <div class="thumb-badge" style="background:linear-gradient(180deg,#ff7fa2,#ff6fa2);color:#1b0b12">BETVISA</div>
+    <div class="thumb-card" onclick="openModalImg('https://i.imgur.com/40JRb2u.jpg')">
+      <div class="thumb-badge"
+           style="background:linear-gradient(180deg,#ff7fa2,#ff6fa2);color:#1b0b12">
+        BETVISA
+      </div>
       <img src="https://i.imgur.com/40JRb2u.jpg" alt="Betvisa player photo">
       <div class="thumb-caption">Verified • Player</div>
     </div>
   </div>
 
-  <div class="copy-row" style="margin-top:18px;">
-    <button class="copy-btn" onclick="requirePinThenCopy('jeetwin')">Copy JEETWIN Info</button>
-    <button class="copy-btn" onclick="requirePinThenCopy('betvisa')">Copy BETVISA Info</button>
+  <!-- COPY BUTTONS : এক লাইনে ডানে-বামে -->
+  <div class="copy-row">
+    <button class="copy-btn" onclick="doCopy('jeetwin')">
+      Copy JEETWIN Info
+    </button>
+    <button class="copy-btn" onclick="doCopy('betvisa')">
+      Copy BETVISA Info
+    </button>
   </div>
-
 </div>
 
-<!-- image modal -->
+<!-- IMAGE MODAL -->
 <div id="modal" onclick="closeModal()">
   <div class="close-x" onclick="closeModal()">✖</div>
   <img id="modal-img" src="" alt="full image view">
 </div>
 
-<!-- PIN modal (used for initial gating and all actions that require PIN) -->
+<!-- PIN MODAL (শুধু শুরুতে একবারের জন্য) -->
 <div id="pinModal">
   <div class="pin-box" role="dialog" aria-modal="true">
     <h3>Enter Access Code</h3>
@@ -103,136 +403,110 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
       <button class="btn-cancel" onclick="closePin()">Cancel</button>
       <button class="btn-ok" onclick="verifyPin()">Unlock</button>
     </div>
-    <p id="pinError" class="small-muted" style="margin-top:10px;"></p>
+    <p id="pinError"></p>
   </div>
 </div>
 
 <script>
-// ===== CONFIG =====
-const PIN = '2393'; // change here if you want another PIN
+  // ===== PIN CONFIG =====
+  const PIN = '2393';  // এখানে PIN বদলাতে পারবেন
 
-// AFF data kept only in JS
-const AFF = {
-  jeetwin: `JEETWIN AFFILIATE DETAILS
+  // কপি করার তথ্যগুলো JS-এ রাখা
+  const AFF = {
+    jeetwin: `JEETWIN AFFILIATE DETAILS
 Username: affuzzaman
 Account Status: Active
 Phone: +8801979990349
 Email: smakerruzzamanripon@gmail.com`,
-  betvisa: `BETVISA AFFILIATE DETAILS
+    betvisa: `BETVISA AFFILIATE DETAILS
 Username: ukilaff
 Account Status: Active
 Phone: +8801716214561
 Email: smukiluddin@gmail.com`
-};
+  };
 
-const pinModal = document.getElementById('pinModal');
-const mainCard = document.getElementById('mainCard');
+  const pinModal = document.getElementById('pinModal');
+  const mainCard = document.getElementById('mainCard');
 
-// show pin modal on load (initial gate)
-window.addEventListener('load', function(){
-  showPin('initial'); // require PIN before seeing page
-});
+  // পেজ লোড হলে PIN চাইবে
+  window.addEventListener('load', function () {
+    showPin();
+  });
 
-// ---------- PIN modal helpers ----------
-function showPin(request){
-  pinModal.dataset.request = request || 'initial';
-  document.getElementById('pinInput').value = '';
-  document.getElementById('pinError').textContent = '';
-  pinModal.style.display = 'flex';
-  // keep main content hidden while modal open (locked)
-  mainCard.classList.add('locked');
-  setTimeout(()=> document.getElementById('pinInput').focus(), 50);
-}
+  function showPin() {
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinError').textContent = '';
+    pinModal.style.display = 'flex';
+    mainCard.classList.add('locked'); // কনটেন্ট একেবারে লুকিয়ে রাখে
+    setTimeout(() => document.getElementById('pinInput').focus(), 50);
+  }
 
-function closePin(){
-  pinModal.style.display = 'none';
-  pinModal.dataset.request = '';
-  // keep hidden if not unlocked
-  if(!window._unlocked) mainCard.classList.add('locked');
-}
+  function closePin() {
+    pinModal.style.display = 'none';
+    // Cancel করলে কনটেন্ট লুকানোই থাকবে
+    mainCard.classList.add('locked');
+  }
 
-function verifyPin(){
-  const v = document.getElementById('pinInput').value.trim();
-  if(!v){ document.getElementById('pinError').textContent = 'Enter code.'; return; }
-  const req = pinModal.dataset.request || '';
-  if(v === PIN){
-    if(req === 'initial'){
+  function verifyPin() {
+    const v = document.getElementById('pinInput').value.trim();
+    if (!v) {
+      document.getElementById('pinError').textContent = 'Enter code.';
+      return;
+    }
+    if (v === PIN) {
       window._unlocked = true;
-      mainCard.classList.remove('locked'); // SHOW content after correct PIN
+      mainCard.classList.remove('locked'); // সঠিক PIN দিলেই কনটেন্ট দেখা যাবে
       pinModal.style.display = 'none';
-      pinModal.dataset.request = '';
-      return;
-    }
-    if(req.startsWith('open:')){
-      const url = req.slice(5);
-      window.open(url, '_blank', 'noopener');
-      pinModal.style.display = 'none';
-      pinModal.dataset.request = '';
-      return;
-    } else if(req.startsWith('img:')){
-      const src = req.slice(4);
-      openModalImg(src);
-      pinModal.style.display = 'none';
-      pinModal.dataset.request = '';
-      return;
-    } else if(req.startsWith('copy:')){
-      const key = req.slice(5);
-      doCopy(key);
-      pinModal.style.display = 'none';
-      pinModal.dataset.request = '';
-      return;
     } else {
-      pinModal.style.display = 'none';
-      pinModal.dataset.request = '';
-      return;
+      document.getElementById('pinError').textContent = '❌ Wrong code. Try again.';
     }
-  } else {
-    document.getElementById('pinError').textContent = '❌ Wrong code. Try again.';
   }
-}
 
-// ---------- functions invoked by UI ----------
-function requirePinThenOpen(url){
-  showPin('open:'+url);
-}
-
-function requirePinThenOpenImage(src){
-  showPin('img:'+src);
-}
-
-function requirePinThenCopy(key){
-  showPin('copy:'+key);
-}
-
-// actual copy action (called after PIN verified)
-function doCopy(key){
-  const txt = AFF[key];
-  if(!txt) return alert('No data to copy.');
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(txt).then(()=> alert('Copied Successfully ✓'));
-  } else {
-    const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta);
-    ta.select();
-    try{ document.execCommand('copy'); alert('Copied Successfully ✓'); } catch(e){ window.prompt('Copy the text below:', txt); }
-    document.body.removeChild(ta);
+  // কপি ফাংশন (ভিতরে আর PIN লাগবে না)
+  function doCopy(key) {
+    const txt = AFF[key];
+    if (!txt) return alert('No data to copy.');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(() => alert('Copied Successfully ✓'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        alert('Copied Successfully ✓');
+      } catch (e) {
+        window.prompt('Copy the text below:', txt);
+      }
+      document.body.removeChild(ta);
+    }
   }
-}
 
-// image modal
-function openModalImg(src){
-  const modal = document.getElementById('modal');
-  document.getElementById('modal-img').src = src;
-  modal.style.display = 'flex';
-}
-function closeModal(){ document.getElementById('modal').style.display = 'none'; document.getElementById('modal-img').src = ''; }
-
-// ESC handling
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape'){
-    if(document.getElementById('modal').style.display === 'flex') closeModal();
-    else if(pinModal.style.display === 'flex') closePin();
+  // ইমেজ মডাল (ভিতরে আর PIN লাগে না)
+  function openModalImg(src) {
+    const modal = document.getElementById('modal');
+    document.getElementById('modal-img').src = src;
+    modal.style.display = 'flex';
   }
-});
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+    document.getElementById('modal-img').src = '';
+  }
+
+  // ESC চাপলে মোডাল / PIN বন্ধ
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (document.getElementById('modal').style.display === 'flex') {
+        closeModal();
+      } else if (pinModal.style.display === 'flex') {
+        closePin();
+      }
+    }
+  });
 </script>
+
 </body>
 </html>
