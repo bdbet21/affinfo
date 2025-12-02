@@ -27,8 +27,10 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 .login-btn{ width:100%; height:100%; background:linear-gradient(180deg,#f6c84c,#eebb3e); border-radius:10px; color:black; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:14px;}
 .thumb img{ object-fit:cover; border-radius:8px;}
 .player-section{ margin-top:18px; padding:16px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.03); text-align:center; font-weight:800; letter-spacing:0.4px;}
-.thumbs-row{ display:flex; gap:16px; justify-content:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap;}
-.thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease;}
+/* Ensure thumbs row centers both horizontally and vertically */
+.thumbs-row{ display:flex; gap:16px; justify-content:center; align-items:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap; width:100%;}
+/* force thumb-cards centered inside the flex container */
+.thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease; margin:0 auto;}
 .thumb-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; display:block;}
 .thumb-badge{ position:absolute; left:12px; top:8px; background:linear-gradient(180deg,#f6c84c,#eebb3e); color:#071017; padding:6px 8px; border-radius:8px; font-weight:900; font-size:12px; z-index:6;}
 .thumb-caption{ position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted); padding:6px 8px; border-radius:8px; font-size:12px; z-index:6;}
@@ -59,25 +61,42 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
   left:50%;
   transform:translateX(-50%);
   top:-26px;
-  width:140px;
-  height:44px;
-  border-radius:12px;
-  background:linear-gradient(90deg, rgba(246,200,76,0.95), rgba(255,210,110,0.85));
+  width:220px;
+  height:48px;
+  border-radius:14px;
+  background:linear-gradient(90deg, rgba(246,200,76,0.98), rgba(255,210,110,0.88));
   box-shadow:0 8px 22px rgba(246,200,76,0.12), inset 0 -6px rgba(0,0,0,0.08);
   border:1px solid rgba(255,255,255,0.06);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:900;
-  color:#071017;
-  letter-spacing:0.02em;
+  z-index:20;
 }
 
-/* Title placed within the decorative ring instead of normal heading */
+/* New: actual text inside the decorative pill */
+.pin-title{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  top:-18px; /* slightly lower so it sits nicely inside pill */
+  width:220px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color:#071017;
+  letter-spacing:0.03em;
+  z-index:25;
+  pointer-events:none;
+  font-size:15px;
+}
+
+/* hide the old heading */
 .pin-box h3{ display:none; margin:0 0 12px; color:var(--accent); font-size:18px; }
 
 /* Input area - large, rounded, gold border when focused */
-.pin-input-wrap{ margin-top:8px; position:relative; }
+.pin-input-wrap{ margin-top:12px; position:relative; }
 .pin-box input{
   width:100%;
   padding:14px 16px;
@@ -112,7 +131,8 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 /* small screen fine-tuning */
 @media (max-width:520px){
   .pin-box{ padding:16px; border-radius:14px; }
-  .pin-box::before{ width:120px; height:36px; top:-22px; }
+  .pin-box::before{ width:200px; height:40px; top:-22px; }
+  .pin-title{ width:200px; top:-16px; font-size:14px; }
   .pin-box input{ font-size:16px; padding:12px 12px; }
 }
 
@@ -177,9 +197,8 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 <!-- PIN modal (premium styled) -->
 <div id="pinModal" aria-hidden="true">
   <div class="pin-box" role="dialog" aria-modal="true">
-    <!-- decorative ring contains the title -->
-    <div style="position:relative; height:12px;"></div>
-    <div style="text-align:center; margin-top:4px; font-weight:900; color:#071017; font-size:16px; letter-spacing:0.02em; margin-bottom:6px;">ENTER ACCESS CODE</div>
+    <!-- decorative text placed above input inside the gold pill -->
+    <div class="pin-title">Enter Access Code</div>
 
     <div class="pin-input-wrap">
       <input id="pinInput" type="password" placeholder="Enter code" autocomplete="off" aria-label="Access code" />
@@ -337,4 +356,3 @@ document.addEventListener('keydown', function(e){
 </script>
 </body>
 </html>
-```0
