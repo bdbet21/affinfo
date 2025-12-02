@@ -5,16 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>All In One — Premium</title>
 <style>
-:root{
-  --bg:#020416;
-  --card:#071428;
-  --accent:#f6c84c;
-  --muted:#9cb3d9;
-  --glass: rgba(255,255,255,0.03);
-  --gold-glow: rgba(246,200,76,0.12);
-}
-*{box-sizing:border-box}
-body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; display:flex; justify-content:center; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+:root{ --bg:#020416; --card:#071428; --accent:#f6c84c; --muted:#9cb3d9; }
+body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; display:flex; justify-content:center; }
 .card{ width:100%; max-width:820px; background:linear-gradient(180deg,#061527,#04101f); border-radius:16px; padding:22px; box-shadow:0 20px 80px rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.05); color:#e6f0ff; opacity:1; transition:opacity .2s ease; }
 /* CHANGED: when locked hide completely (no dim, no interaction) */
 .card.locked{ display:none !important; pointer-events:none; user-select:none; }
@@ -27,10 +19,8 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 .login-btn{ width:100%; height:100%; background:linear-gradient(180deg,#f6c84c,#eebb3e); border-radius:10px; color:black; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:14px;}
 .thumb img{ object-fit:cover; border-radius:8px;}
 .player-section{ margin-top:18px; padding:16px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.03); text-align:center; font-weight:800; letter-spacing:0.4px;}
-/* Ensure thumbs row centers both horizontally and vertically */
-.thumbs-row{ display:flex; gap:16px; justify-content:center; align-items:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap; width:100%;}
-/* force thumb-cards centered inside the flex container */
-.thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease; margin:0 auto;}
+.thumbs-row{ display:flex; gap:16px; justify-content:center; margin-top:14px; padding:6px 0 2px; flex-wrap:wrap;}
+.thumb-card{ width:220px; height:140px; border-radius:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:8px; box-shadow:0 8px 20px rgba(2,8,20,0.6); border:1px solid rgba(255,255,255,0.035); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; cursor:pointer; transition:transform .25s ease;}
 .thumb-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; display:block;}
 .thumb-badge{ position:absolute; left:12px; top:8px; background:linear-gradient(180deg,#f6c84c,#eebb3e); color:#071017; padding:6px 8px; border-radius:8px; font-weight:900; font-size:12px; z-index:6;}
 .thumb-caption{ position:absolute; right:10px; bottom:10px; background:rgba(2,6,20,0.6); color:var(--muted); padding:6px 8px; border-radius:8px; font-size:12px; z-index:6;}
@@ -38,109 +28,19 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
 .copy-row{ display:flex; gap:12px; justify-content:space-between; margin-top:16px; }
 .copy-btn{ background:#1e7f63; color:white; padding:12px 18px; border-radius:10px; border:0; font-weight:800; cursor:pointer; min-width:48%; text-align:center;}
 .copy-btn.small{ min-width:150px;}
-
-/* ===== PREMIUM PIN MODAL STYLES (GORGEOUS) ===== */
-#pinModal{ display:none; position:fixed; inset:0; z-index:9999; /* semi-transparent dark + soft gold vignette */ background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.75)); backdrop-filter: blur(6px) contrast(1); align-items:center; justify-content:center; padding:20px; }
-.pin-box{
-  width:92%;
-  max-width:520px;
-  background:linear-gradient(180deg, rgba(10,18,30,0.95), rgba(4,8,18,0.98));
-  padding:22px;
-  border-radius:18px;
-  border:1px solid rgba(246,200,76,0.12);
-  text-align:center;
-  box-shadow: 0 20px 60px rgba(2,6,20,0.7), 0 0 40px var(--gold-glow);
-  position:relative;
-  overflow:visible;
-}
-
-/* decorative gold ring top */
-.pin-box::before{
-  content:'';
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  top:-26px;
-  width:220px;
-  height:48px;
-  border-radius:14px;
-  background:linear-gradient(90deg, rgba(246,200,76,0.98), rgba(255,210,110,0.88));
-  box-shadow:0 8px 22px rgba(246,200,76,0.12), inset 0 -6px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.06);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:20;
-}
-
-/* New: actual text inside the decorative pill */
-.pin-title{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  top:-18px; /* slightly lower so it sits nicely inside pill */
-  width:220px;
-  height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  color:#071017;
-  letter-spacing:0.03em;
-  z-index:25;
-  pointer-events:none;
-  font-size:15px;
-}
-
-/* hide the old heading */
-.pin-box h3{ display:none; margin:0 0 12px; color:var(--accent); font-size:18px; }
-
-/* Input area - large, rounded, gold border when focused */
-.pin-input-wrap{ margin-top:12px; position:relative; }
-.pin-box input{
-  width:100%;
-  padding:14px 16px;
-  border-radius:12px;
-  border:2px solid rgba(255,255,255,0.06);
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-  color:#fff;
-  margin-bottom:10px;
-  font-size:18px;
-  outline:none;
-  transition:box-shadow .18s ease, border-color .18s ease, transform .08s ease;
-  box-shadow: 0 8px 26px rgba(2,6,20,0.6) inset;
-  -webkit-appearance:none;
-}
-
-/* glowing gold focus */
-.pin-box input:focus{
-  border-color: rgba(246,200,76,0.95);
-  box-shadow: 0 12px 40px rgba(246,200,76,0.06), 0 6px 18px rgba(0,0,0,0.6) inset;
-  transform:translateY(-1px);
-}
-
-/* small helper text and error */
-.small-muted{ color:var(--muted); font-size:13px; margin-top:6px; min-height:18px; }
-
-/* actions */
-.pin-box .actions{ display:flex; gap:12px; justify-content:center; margin-top:6px; }
-.pin-box button{ padding:10px 16px; border-radius:10px; border:0; cursor:pointer; font-weight:900; letter-spacing:0.02em; font-size:15px; }
-.btn-cancel{ background:rgba(255,255,255,0.06); color:#fff; box-shadow:0 8px 18px rgba(0,0,0,0.5); }
-.btn-ok{ background:linear-gradient(180deg,#f6c84c,#eebb3e); color:#071017; box-shadow: 0 12px 30px rgba(238,187,62,0.09); }
-
-/* small screen fine-tuning */
-@media (max-width:520px){
-  .pin-box{ padding:16px; border-radius:14px; }
-  .pin-box::before{ width:200px; height:40px; top:-22px; }
-  .pin-title{ width:200px; top:-16px; font-size:14px; }
-  .pin-box input{ font-size:16px; padding:12px 12px; }
-}
-
+/* PIN modal */
+#pinModal{ display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
+.pin-box{ width:92%; max-width:420px; background:#071428; padding:20px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); text-align:center;}
+.pin-box h3{ margin:0 0 12px; color:var(--accent); font-size:18px;}
+.pin-box input{ width:100%; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.02); color:#fff; margin-bottom:12px; font-size:16px;}
+.pin-box .actions{ display:flex; gap:10px; justify-content:center; }
+.pin-box button{ padding:10px 14px; border-radius:8px; border:0; cursor:pointer; font-weight:700;}
+.btn-cancel{ background:#2b3946; color:#fff;}
+.btn-ok{ background:#1e7f63; color:#fff;}
 /* modal image */
 #modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:9997; justify-content:center; align-items:center;}
 #modal img{ max-width:95%; max-height:95%; border-radius:10px;}
 .close-x{ position:absolute; right:18px; top:18px; color:white; font-size:28px; cursor:pointer; z-index:10000; }
-
 /* responsive */
 @media (max-width:520px){ .thumb-card{ width:100%; height:150px;} .item{ width:65px; height:65px;} .copy-btn{ min-width:48%; } .copy-row{ flex-direction:row; } }
 </style>
@@ -194,21 +94,15 @@ body{ margin:0; padding:22px; background:var(--bg); font-family:Inter,system-ui,
   <img id="modal-img" src="" alt="full image view">
 </div>
 
-<!-- PIN modal (premium styled) -->
-<div id="pinModal" aria-hidden="true">
+<!-- PIN modal (used for initial gating and all actions that require PIN) -->
+<div id="pinModal">
   <div class="pin-box" role="dialog" aria-modal="true">
-    <!-- decorative text placed above input inside the gold pill -->
-    <div class="pin-title">Enter Access Code</div>
-
-    <div class="pin-input-wrap">
-      <input id="pinInput" type="password" placeholder="Enter code" autocomplete="off" aria-label="Access code" />
-    </div>
-
-    <div class="actions" style="margin-top:8px;">
+    <h3>Enter Access Code</h3>
+    <input id="pinInput" type="password" placeholder="Enter code" autocomplete="off" />
+    <div class="actions">
       <button class="btn-cancel" onclick="closePin()">Cancel</button>
       <button class="btn-ok" onclick="verifyPin()">Unlock</button>
     </div>
-
     <p id="pinError" class="small-muted" style="margin-top:10px;"></p>
   </div>
 </div>
@@ -234,17 +128,9 @@ Email: smukiluddin@gmail.com`
 const pinModal = document.getElementById('pinModal');
 const mainCard = document.getElementById('mainCard');
 
-// On load: if sessionStorage has unlocked, show content; otherwise show premium pin modal
+// show pin modal on load (initial gate)
 window.addEventListener('load', function(){
-  if(sessionStorage.getItem('premium_unlocked') === '1'){
-    // already unlocked this session
-    mainCard.classList.remove('locked');
-    mainCard.style.display = 'block';
-    pinModal.style.display = 'none';
-  } else {
-    // show premium modal
-    showPin('initial');
-  }
+  showPin('initial'); // require PIN before seeing page
 });
 
 // ---------- PIN modal helpers ----------
@@ -253,74 +139,68 @@ function showPin(request){
   document.getElementById('pinInput').value = '';
   document.getElementById('pinError').textContent = '';
   pinModal.style.display = 'flex';
-  pinModal.setAttribute('aria-hidden','false');
-  // hide main until unlocked
+  // keep main content hidden while modal open (locked)
   mainCard.classList.add('locked');
-  mainCard.style.display = 'none';
-  setTimeout(()=> document.getElementById('pinInput').focus(), 60);
+  setTimeout(()=> document.getElementById('pinInput').focus(), 50);
 }
 
 function closePin(){
   pinModal.style.display = 'none';
   pinModal.dataset.request = '';
   // keep hidden if not unlocked
-  if(sessionStorage.getItem('premium_unlocked') !== '1'){
-    mainCard.classList.add('locked');
-    mainCard.style.display = 'none';
-  }
+  if(!window._unlocked) mainCard.classList.add('locked');
 }
 
 function verifyPin(){
   const v = document.getElementById('pinInput').value.trim();
-  const err = document.getElementById('pinError');
-  err.textContent = '';
-  if(!v){ err.textContent = 'Enter code.'; return; }
+  if(!v){ document.getElementById('pinError').textContent = 'Enter code.'; return; }
   const req = pinModal.dataset.request || '';
   if(v === PIN){
-    // mark session unlocked so it won't ask again in this browser session
-    sessionStorage.setItem('premium_unlocked','1');
-
-    // show content and hide modal
-    mainCard.classList.remove('locked');
-    mainCard.style.display = 'block';
-    pinModal.style.display = 'none';
-    pinModal.dataset.request = '';
-
-    // If the request was to open/copy/show etc, handle (keeps earlier behaviour)
+    if(req === 'initial'){
+      window._unlocked = true;
+      mainCard.classList.remove('locked'); // SHOW content after correct PIN
+      pinModal.style.display = 'none';
+      pinModal.dataset.request = '';
+      return;
+    }
     if(req.startsWith('open:')){
       const url = req.slice(5);
       window.open(url, '_blank', 'noopener');
+      pinModal.style.display = 'none';
+      pinModal.dataset.request = '';
       return;
     } else if(req.startsWith('img:')){
       const src = req.slice(4);
       openModalImg(src);
+      pinModal.style.display = 'none';
+      pinModal.dataset.request = '';
       return;
     } else if(req.startsWith('copy:')){
       const key = req.slice(5);
       doCopy(key);
+      pinModal.style.display = 'none';
+      pinModal.dataset.request = '';
       return;
     } else {
+      pinModal.style.display = 'none';
+      pinModal.dataset.request = '';
       return;
     }
   } else {
-    err.textContent = '❌ Wrong code. Try again.';
+    document.getElementById('pinError').textContent = '❌ Wrong code. Try again.';
   }
 }
 
 // ---------- functions invoked by UI ----------
 function requirePinThenOpen(url){
-  // if already unlocked do open immediately
-  if(sessionStorage.getItem('premium_unlocked') === '1'){ window.open(url,'_blank','noopener'); return; }
   showPin('open:'+url);
 }
 
 function requirePinThenOpenImage(src){
-  if(sessionStorage.getItem('premium_unlocked') === '1'){ openModalImg(src); return; }
   showPin('img:'+src);
 }
 
 function requirePinThenCopy(key){
-  if(sessionStorage.getItem('premium_unlocked') === '1'){ doCopy(key); return; }
   showPin('copy:'+key);
 }
 
@@ -338,7 +218,7 @@ function doCopy(key){
   }
 }
 
-// image modal (unchanged behaviour)
+// image modal
 function openModalImg(src){
   const modal = document.getElementById('modal');
   document.getElementById('modal-img').src = src;
@@ -346,7 +226,7 @@ function openModalImg(src){
 }
 function closeModal(){ document.getElementById('modal').style.display = 'none'; document.getElementById('modal-img').src = ''; }
 
-// ESC handling (close modal or pin)
+// ESC handling
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
     if(document.getElementById('modal').style.display === 'flex') closeModal();
